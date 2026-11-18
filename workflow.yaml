@@ -14,10 +14,6 @@ jobs:
         uses: actions/setup-java@v4
         with:                
           distribution: temurin
-<<<<<<< HEAD
           java-version: '17'
-=======
-          java-version: '21'
->>>>>>> main
       - name: Build and test 
-        run: ./mvnw -B verify
+        run: ./build_automation/calc-app-maven/.mvnw -B verify
