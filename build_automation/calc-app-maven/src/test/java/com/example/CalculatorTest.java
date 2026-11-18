@@ -8,4 +8,9 @@ class CalculatorTest {
     void addsTwoNumbers() {
         assertEquals(5, Calculator.add(2, 3));
     }
+
+    @Test
+    void recognisesAdd() {
+       assertEquals(true, Calculator.isAdd("add"));
+    }
 }

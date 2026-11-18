@@ -41,6 +41,40 @@
           </archive>
         </configuration>
       </plugin>
+      <plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-checkstyle-plugin</artifactId>
+  <version>3.6.0</version>
+  <configuration>
+    <configLocation>checkstyle.xml</configLocation>
+    <consoleOutput>true</consoleOutput>
+    <failOnViolation>true</failOnViolation>
+  </configuration>
+  <executions>
+    <execution>
+      <id>checkstyle</id>
+      <phase>validate</phase>
+      <goals><goal>check</goal></goals>
+    </execution>
+  </executions>
+</plugin>
+
+<plugin>
+  <groupId>com.github.spotbugs</groupId>
+  <artifactId>spotbugs-maven-plugin</artifactId>
+  <version>4.8.6.6</version>
+  <configuration>
+    <effort>Max</effort>
+    <threshold>Medium</threshold>
+  </configuration>
+  <executions>
+    <execution>
+      <id>spotbugs</id>
+      <phase>verify</phase>
+      <goals><goal>check</goal></goals>
+    </execution>
+  </executions>
+</plugin>
     </plugins>
   </build>
 </project>

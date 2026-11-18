@@ -1,6 +1,11 @@
 package com.example;
 
 public class Calculator{
+
+public static boolean isAdd(String op){
+return op.equals("add");
+}
+
 public static int add(int a, int b){
 return a + b;
 }
