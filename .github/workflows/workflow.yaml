@@ -4,19 +4,52 @@ on:
   pull_request:
     branches: [main]
 
-jobs:                           
-  build:                        
-    runs-on: ubuntu-latest
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
     defaults:
       run:
-        working-directory: build_automation/calc-app-maven      
-    steps:                       
-      - name: Get the code      
+        working-directory: build_automation/calc-app-maven
+
+    steps:
+      - name: Get the code
         uses: actions/checkout@v4
-      - name: Install Java   
+
+      - name: Install Java
         uses: actions/setup-java@v4
-        with:                
+        with:
           distribution: temurin
-          java-version: '17'
-      - name: Build and test 
+          java-version: '21'
+          cache: maven
+          cache-dependency-path: build_automation/calc-app-maven/pom.xml
+
+      - name: Build and test
         run: ./mvnw -B verify
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports-${{ matrix.os }}
+          path: |
+            build_automation/calc-app-maven/target/surefire-reports/
+            build_automation/calc-app-maven/target/failsafe-reports/
+            build_automation/calc-app-maven/target/site/jacoco/
+          retention-days: 7
+
+      - name: Upload JAR
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: calc-app-${{ github.sha }}
+          path: build_automation/calc-app-maven/target/*.jar
+          retention-days: 7
