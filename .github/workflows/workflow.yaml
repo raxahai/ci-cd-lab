@@ -6,7 +6,10 @@ on:
 
 jobs:                           
   build:                        
-    runs-on: ubuntu-latest      
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: build_automation/calc-app-maven      
     steps:                       
       - name: Get the code      
         uses: actions/checkout@v4
@@ -16,4 +19,4 @@ jobs:
           distribution: temurin
           java-version: '17'
       - name: Build and test 
-        run: ./build_automation/calc-app-maven/mvnw -B verify
+        run: ./mvnw -B verify
