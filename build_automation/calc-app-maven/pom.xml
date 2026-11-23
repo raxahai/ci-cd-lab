@@ -6,7 +6,7 @@
 
   <groupId>com.example</groupId>
   <artifactId>calc-app-maven</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
 
   <properties>
     <maven.compiler.release>17</maven.compiler.release>
@@ -77,4 +77,10 @@
 </plugin>
     </plugins>
   </build>
+<distributionManagement>
+  <repository>
+    <id>github</id>
+    <url>https://maven.pkg.github.com/raxahai/ci-cd-lab</url>
+  </repository>
+</distributionManagement>
 </project>
